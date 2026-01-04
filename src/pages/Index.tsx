@@ -5,6 +5,7 @@ import DestinationInput from "@/components/DestinationInput";
 import SpeedSlider from "@/components/SpeedSlider";
 import SpeedGauge from "@/components/SpeedGauge";
 import RouteCard from "@/components/RouteCard";
+import Map from "@/components/Map";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -26,20 +27,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background gradient effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-30"
-          style={{
-            background: 'radial-gradient(ellipse, hsl(190 100% 50% / 0.15) 0%, transparent 70%)',
-          }}
-        />
-        <div 
-          className="absolute bottom-0 right-0 w-[600px] h-[600px] opacity-20"
-          style={{
-            background: 'radial-gradient(circle, hsl(190 100% 50% / 0.1) 0%, transparent 60%)',
-          }}
-        />
+      {/* Map background */}
+      <div className="absolute inset-0">
+        <Map className="w-full h-full" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
 
       <div className="relative z-10 container max-w-md mx-auto px-4 py-8">
