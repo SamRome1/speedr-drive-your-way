@@ -29,18 +29,6 @@ const Index = () => {
 
   return (
     <>
-      {/* Driving Mode Overlay */}
-      <AnimatePresence>
-        {isDriving && distance && (
-          <DrivingMode
-            destination={destination}
-            distance={distance}
-            speedPercentage={speedPercentage}
-            onEnd={handleEndDriving}
-          />
-        )}
-      </AnimatePresence>
-
       <div className="min-h-screen bg-background relative overflow-hidden">
         {/* Map background */}
         <div className="absolute inset-0">
@@ -158,6 +146,18 @@ const Index = () => {
         </motion.footer>
       </div>
     </div>
+
+      {/* Driving Mode Overlay */}
+      <AnimatePresence>
+        {isDriving && distance && (
+          <DrivingMode
+            destination={destination}
+            distance={distance}
+            speedPercentage={speedPercentage}
+            onEnd={handleEndDriving}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
