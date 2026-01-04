@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Gauge, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Gauge } from "lucide-react";
 import DestinationInput from "@/components/DestinationInput";
 import SpeedSlider from "@/components/SpeedSlider";
 import SpeedGauge from "@/components/SpeedGauge";
 import RouteCard from "@/components/RouteCard";
 import Map from "@/components/Map";
-import { toast } from "sonner";
+import DrivingMode from "@/components/DrivingMode";
 
 const Index = () => {
   const [destination, setDestination] = useState("");
   const [distance, setDistance] = useState<number | null>(null);
   const [speedPercentage, setSpeedPercentage] = useState(0);
+  const [isDriving, setIsDriving] = useState(false);
 
   const handleSelectDestination = (dest: string, dist: number) => {
     setDestination(dest);
@@ -19,19 +20,33 @@ const Index = () => {
   };
 
   const handleStart = () => {
-    toast.success("Navigation started!", {
-      description: `Heading to your destination +${speedPercentage}% faster`,
-      icon: <Zap className="w-4 h-4" />,
-    });
+    setIsDriving(true);
+  };
+
+  const handleEndDriving = () => {
+    setIsDriving(false);
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Map background */}
-      <div className="absolute inset-0">
-        <Map className="w-full h-full" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-      </div>
+    <>
+      {/* Driving Mode Overlay */}
+      <AnimatePresence>
+        {isDriving && distance && (
+          <DrivingMode
+            destination={destination}
+            distance={distance}
+            speedPercentage={speedPercentage}
+            onEnd={handleEndDriving}
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Map background */}
+        <div className="absolute inset-0">
+          <Map className="w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </div>
 
       <div className="relative z-10 container max-w-md mx-auto px-4 py-8">
         {/* Header */}
@@ -143,6 +158,7 @@ const Index = () => {
         </motion.footer>
       </div>
     </div>
+    </>
   );
 };
 
